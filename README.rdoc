@@ -1,6 +1,6 @@
-= rob-gordon
+= Rob Gordon
 
-Description goes here.
+A music organizer for the self-confessed obsessive.
 
 == Contributing to rob-gordon
  
