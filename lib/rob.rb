@@ -34,6 +34,7 @@ module Rob
 		end
 
 		def self.import!(indir, libdir="#{ ENV['HOME']}/Music")
+			puts "Imporing all mp3s in: #{ indir }"
 			puts "Now importing to #{ libdir }"
 			Dir[File.join(indir, '**.mp3')].each do |file|
 				if File.extname(file) == '.mp3'

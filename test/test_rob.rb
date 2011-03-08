@@ -3,8 +3,8 @@ require 'helper'
 class TestRob < Test::Unit::TestCase
 
 	def setup
-		@music_dir = File.expand_path(File.join(File.dirname(__FILE__),  'music'))
-		@music_lib = File.expand_path(File.join(File.dirname(__FILE__),  'library'))
+		@music_dir = File.expand_path(File.join('test', 'music'))
+		@music_lib = File.expand_path(File.join('test', 'library'))
 	end
 
 	def test_import
