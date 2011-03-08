@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem 'id3'
+gem 'id3lib-ruby'
 
 group :development do
   gem "shoulda", ">= 0"
