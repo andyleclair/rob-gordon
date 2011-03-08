@@ -33,10 +33,5 @@ pkg
 #*.tmproj
 #tmtags
 #
-# For emacs:
-#*~
-#\#*
-#.\#*
-#
 # For vim:
-#*.swp
+*.swp
