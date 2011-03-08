@@ -1,4 +1,5 @@
 require 'id3lib'
+require 'fileutils'
 
 module Rob
 	module Gordon
@@ -17,19 +18,57 @@ module Rob
 
 		def self.run!(*args)
 						
-			if args.length < 1
+			case args.length
+			when 0
 				puts INTRO
+			when 1
+				indir = args[0]
+				import!(indir)
+			when 2
+				indir, lib = args
+				import!(indir, lib)
 			else
-				indir, library = args
-				import!(indir, library)
+				puts INTRO
 			end
 			return 0
 		end
 
-		def self.import!(indir, libdir='~/Music')
+		def self.import!(indir, libdir="#{ ENV['HOME']}/Music")
+			puts "Now importing to #{ libdir }"
 			Dir[File.join(indir, '**.mp3')].each do |file|
-				song = ID3Lib::Tag.new file
-				puts "#{ song.artist }/#{ song.album }/#{ song.track } #{ song.title }.mp3"
+				if File.extname(file) == '.mp3'
+					song = ID3Lib::Tag.new file
+					dest = File.join(libdir, song.artist, song.album, filename(song.track, song.title))
+					if !File.exists? dest
+						artistdir = File.join(libdir, song.artist)
+						if !Dir.exists? artistdir
+							puts "Creating artist directory #{ artistdir }"
+							Dir.mkdir artistdir
+						end
+
+						albumdir = File.join(artistdir, song.album)
+
+						if !Dir.exists? albumdir
+							puts "Creating album directory #{ albumdir }"
+							Dir.mkdir albumdir
+						end
+						
+						puts "Now importing #{ song.track } to #{ libdir }"
+						FileUtils.cp file, dest
+					else
+						puts "Destination file #{ dest } exists, skipping..."
+					end
+				else
+
+				end
+			end
+		end
+
+		def self.filename(track, title)
+			if track.to_i < 10
+				"0#{ track }. #{ title }.mp3"
+			else
+				"#{ track }. #{ title }.mp3"
 			end
 		end
 	end

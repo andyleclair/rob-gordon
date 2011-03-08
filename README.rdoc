@@ -2,6 +2,14 @@
 
 A music organizer for the self-confessed obsessive.
 
+== Credits
+
+* Camden for the Vale EP included in the test directory.  Download it at http://camden.bandcamp.com
+* Robin Stocker fro id3lib-ruby -- http://id3lib-ruby.rubyforge.org/
+
+No, seriously, turbo props to Camden for letting me distribute their EP as a part of this source.
+Check them out at http://camdensoundz.com
+
 == Contributing to rob-gordon
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
