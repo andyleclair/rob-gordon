@@ -45,6 +45,8 @@ module Rob
 						album  =  song.album
 						track	 =  song.track[0]
 						title  =  song.title
+						# yeah, dupe the code to force the exception, if it's gonna happen.
+						dest = File.join(libdir, artist, album)
 					rescue 
 						# Suck a dick, UTF-16
 						artist = Iconv.conv('UTF-8', 'UTF-16BE', song.artist)
