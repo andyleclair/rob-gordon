@@ -45,21 +45,19 @@ module Rob
 						album  =  song.album
 						track	 =  song.track[0]
 						title  =  song.title
-						out_file = filename(song.track, song.title)
-						dest = File.join(libdir, song.artist, song.album, out_file)
-						artistdir = File.join(libdir, song.artist)
-						albumdir = File.join(artistdir, song.album)
 					rescue 
 						# Suck a dick, UTF-16
 						artist = Iconv.conv('UTF-8', 'UTF-16BE', song.artist)
 						album  = Iconv.conv('UTF-8', 'UTF-16BE', song.album)
 						track	 = Iconv.conv('UTF-8', 'UTF-16BE', song.track)[0]
 						title  = Iconv.conv('UTF-8', 'UTF-16BE', song.title) 
-						out_file = filename(track, title)
-						dest = File.join(libdir, artist, album, out_file)
-						artistdir = File.join(libdir, artist)
-						albumdir = File.join(artistdir, album)
 					end
+
+					out_file = filename(track, title)
+					dest = File.join(libdir, artist, album, out_file)
+					artistdir = File.join(libdir, artist)
+					albumdir = File.join(artistdir, album)
+
 					if !File.exists? dest
 						if !Dir.exists? artistdir
 							puts "Creating artist directory #{ artistdir }"
