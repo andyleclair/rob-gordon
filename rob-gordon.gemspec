@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
     "VERSION",
     "bin/rob",
     "lib/rob.rb",
+    "rob-gordon.gemspec",
     "test/helper.rb",
     "test/music/Camden - Vale EP - 01 Penelope.mp3",
     "test/music/Camden - Vale EP - 02 Walkin' on the Beast.mp3",
