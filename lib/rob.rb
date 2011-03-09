@@ -41,16 +41,22 @@ module Rob
 				if File.extname(file) == '.mp3'
 					song = ID3Lib::Tag.new file
 					begin
-						dest = File.join(libdir, song.artist, song.album, filename(song.track, song.title))
+						artist =  song.artist
+						album  =  song.album
+						track	 =  song.track[0]
+						title  =  song.title
+						out_file = filename(song.track, song.title)
+						dest = File.join(libdir, song.artist, song.album, out_file)
 						artistdir = File.join(libdir, song.artist)
 						albumdir = File.join(artistdir, song.album)
 					rescue 
 						# Suck a dick, UTF-16
 						artist = Iconv.conv('UTF-8', 'UTF-16BE', song.artist)
 						album  = Iconv.conv('UTF-8', 'UTF-16BE', song.album)
-						track	 = Iconv.conv('UTF-8', 'UTF-16BE', song.track)
-						title  = Iconv.conv('UTF-8', 'UTF-16BE', song.title)
-						dest = File.join(libdir, artist, album, filename(track, title))
+						track	 = Iconv.conv('UTF-8', 'UTF-16BE', song.track)[0]
+						title  = Iconv.conv('UTF-8', 'UTF-16BE', song.title) 
+						out_file = filename(track, title)
+						dest = File.join(libdir, artist, album, out_file)
 						artistdir = File.join(libdir, artist)
 						albumdir = File.join(artistdir, album)
 					end
@@ -65,7 +71,7 @@ module Rob
 							Dir.mkdir albumdir
 						end
 						
-						puts "Now importing #{ song.title } to #{ libdir }"
+						puts "Now importing #{ title } to #{ dest }"
 						FileUtils.cp file, dest
 					else
 						puts "Destination file #{ dest } exists, skipping..."
