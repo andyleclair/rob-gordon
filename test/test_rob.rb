@@ -9,14 +9,16 @@ class TestRob < Test::Unit::TestCase
 
 	def test_import
 		Rob::Gordon::import!(@music_dir, @music_lib)
-		assert Dir.exists? File.join(@music_lib, 'Camden'), "Didin't create artist dir"
-		assert Dir.exists? File.join(@music_lib, 'Camden', 'Vale'), "Didin't create album dir"
+		assert Dir.exists?(File.join(@music_lib, 'Camden')), "Didin't create artist dir"
+		assert Dir.exists?(File.join(@music_lib, 'Camden', 'Vale EP')), "Didin't create album dir"
 	end
 
 	def teardown
-		Dir[File.join(@music_lib, '**.mp3')].each do |file|
+		Dir[File.join(@music_lib, '**/**/*.mp3')].each do |file|
 			FileUtils.remove_file file
 		end
+		Dir.delete(File.join(@music_lib, 'Camden', 'Vale EP'))
+		Dir.delete(File.join(@music_lib, 'Camden'))
 	end
 
 end

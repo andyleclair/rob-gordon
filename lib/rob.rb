@@ -1,5 +1,6 @@
 require 'id3lib'
 require 'fileutils'
+require 'iconv'
 
 module Rob
 	module Gordon
@@ -36,25 +37,35 @@ module Rob
 		def self.import!(indir, libdir="#{ ENV['HOME']}/Music")
 			puts "Imporing all mp3s in: #{ indir }"
 			puts "Now importing to #{ libdir }"
-			Dir[File.join(indir, '**.mp3')].each do |file|
+			Dir[File.join(indir, '**.mp3')].sort.each do |file|
 				if File.extname(file) == '.mp3'
 					song = ID3Lib::Tag.new file
-					dest = File.join(libdir, song.artist, song.album, filename(song.track, song.title))
-					if !File.exists? dest
+					begin
+						dest = File.join(libdir, song.artist, song.album, filename(song.track, song.title))
 						artistdir = File.join(libdir, song.artist)
+						albumdir = File.join(artistdir, song.album)
+					rescue 
+						# Suck a dick, UTF-16
+						artist = Iconv.conv('UTF-8', 'UTF-16BE', song.artist)
+						album  = Iconv.conv('UTF-8', 'UTF-16BE', song.album)
+						track	 = Iconv.conv('UTF-8', 'UTF-16BE', song.track)
+						title  = Iconv.conv('UTF-8', 'UTF-16BE', song.title)
+						dest = File.join(libdir, artist, album, filename(track, title))
+						artistdir = File.join(libdir, artist)
+						albumdir = File.join(artistdir, album)
+					end
+					if !File.exists? dest
 						if !Dir.exists? artistdir
 							puts "Creating artist directory #{ artistdir }"
 							Dir.mkdir artistdir
 						end
-
-						albumdir = File.join(artistdir, song.album)
 
 						if !Dir.exists? albumdir
 							puts "Creating album directory #{ albumdir }"
 							Dir.mkdir albumdir
 						end
 						
-						puts "Now importing #{ song.track } to #{ libdir }"
+						puts "Now importing #{ song.title } to #{ libdir }"
 						FileUtils.cp file, dest
 					else
 						puts "Destination file #{ dest } exists, skipping..."
