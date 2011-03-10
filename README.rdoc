@@ -2,10 +2,28 @@
 
 A music organizer for the self-confessed obsessive.
 
+== Usage
+
+The command to import a folder is called *rob*.
+
+	rob <folder> <path to music library>
+
+*rob* looks through the folder for mp3 files, scans the tags, then creates
+a folder structure in your music library that looks like this:
+
+	<Artist Name>/<Album name>/<Track #>. <Track Name>.mp3
+
+So, if you were importing the tracks in the test directory (thx Camden), you would get:
+
+	Camden/Vale EP/01. Penelope.mp3
+
+Currently, that's the only folder structure and track naming convention.  I don't plan on changing it, because if you don't organize your music like that, _you're wrong_. 
+
 == Credits
 
 * Camden for the Vale EP included in the test directory.  Download it at http://camden.bandcamp.com
 * Robin Stocker fro id3lib-ruby -- http://id3lib-ruby.rubyforge.org/
+* Josh Nichols for Jeweler -- https://github.com/technicalpickles/jeweler
 
 No, seriously, turbo props to Camden for letting me distribute their EP as a part of this source.
 Check them out at http://camdensoundz.com
